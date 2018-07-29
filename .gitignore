@@ -27,3 +27,5 @@ hs_err_pid*
 .metadata/
 .recommenders/
 Servers/
+RemoteSystemsTempFiles/
+book-samples/

@@ -2,6 +2,8 @@ package cc.openhome;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,6 +46,13 @@ public class Hello extends HttpServlet {
 		out.print("<h1>");
 		out.print("hello " + name);
 		out.print("</h1>");
+		out.print("<hr>");
+		List<String> list = Collections.list(request.getHeaderNames());
+		for(String s : list) {
+			out.print(s + ": " + request.getHeader(s));
+			out.print("<br>");
+		}
+		
 		out.print("</body>");
 		out.print("</html>");
 	}
