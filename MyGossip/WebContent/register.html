@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Register</title>
+</head>
+<body>
+	<h1>會員申請</h1>
+	<form method="post" action="register">
+		<table style="background-color:lightgray">
+			<tr>
+				<td>Email信箱</td>
+				<td><input type="email" name="email" maxlength="100"></td>
+			</tr>
+			<tr>
+				<td>名稱(最大16字元):</td>
+				<td><input type="text" name="username" maxlength="16"></td>
+			</tr>
+			<tr>
+				<td>密碼(8~16字元)</td>
+				<td><input type="password" name="password" maxlength="16"></td>
+			</tr>
+			<tr>
+				<td>確認密碼:</td>
+				<td><input type="password" name="passwordconfirm" maxlength="16"></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"><input type="submit" name="register" value="註冊"></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>
