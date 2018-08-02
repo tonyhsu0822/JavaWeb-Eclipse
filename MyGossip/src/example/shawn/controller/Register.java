@@ -17,19 +17,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  * Servlet implementation class Register
  */
-@WebServlet("/register")
+@WebServlet("/Register")
 public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static final String MSG_INVALID_EMAIL = "invalid eamil";
-    private static final String MSG_INVALID_USERNAME = "invalid username";
-    private static final String MSG_INVALID_PASSWORD = "invalid password";
-    private static final String FORWARD_SUCCESS = "register_success.view";
-    private static final String FORWARD_ERROR = "register_error.view";
-    private static final String PATH_USERS = "C:/javaweb/eclipse-workspace/MyGossip/users";
+    private static final String MSG_INVALID_EMAIL = "電子信箱格式錯誤";
+    private static final String MSG_INVALID_USERNAME = "使用者名稱不符合規定";
+    private static final String MSG_INVALID_PASSWORD = "密碼不符合規定或兩次密碼不同";
+    private static final String FORWARD_SUCCESS = "RegisterSuccess.view";
+    private static final String FORWARD_ERROR = "RegisterError.view";
     
     private static final Pattern REGEX_USERNAME = Pattern.compile("^\\w{1,16}$");
     private static final Pattern REGEX_PASSWORD = Pattern.compile("^\\w{8,16}$");
@@ -93,7 +91,7 @@ public class Register extends HttpServlet {
 	
 	private void tryCreateUser(String email, String username, String password) throws IOException{
 //		Path userhome = Paths.get(PATH_USERS, username);
-		File userhome2 = new File(PATH_USERS, username);
+		File userhome2 = new File(Constants.PATH_USERS, username);
 		if(!userhome2.exists() /* || Files.notExists(userhome)*/ ) {
 			
 			userhome2.mkdir();

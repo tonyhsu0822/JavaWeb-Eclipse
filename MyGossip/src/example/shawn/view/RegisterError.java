@@ -13,22 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class RegisterError
  */
-@WebServlet("/register_error.view")
+@WebServlet("/RegisterError.view")
 public class RegisterError extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private static final String HTML_TEMPLATE = 
-			"<!DOCTYPE html>"
-			+ "<html>"
-			+ "	<head>"
-			+ "		<meta charset='utf-8'>"
-			+ "		<title>%s</title>"
-			+ "	</head>"
-			+ "	<body>"
-			+ "		<h1>%s</h1>"
-			+ "		%s"
-			+ "	</body>"
-			+ "</html>";
 	private static final String HTML_TITLE = "Illegal Form";
 	private static final String HTML_HEADING = "表單填寫錯誤";
 	private static final String HTML_LINK_REGISTER = "<a href='register.html'>重新註冊</a>";
@@ -61,7 +49,7 @@ public class RegisterError extends HttpServlet {
 			.append("<br>")
 			.append(HTML_LINK_INDEX);
 		
-		out.printf(HTML_TEMPLATE, HTML_TITLE, HTML_HEADING, sb.toString());
+		out.printf(Constants.HTML_TEMPLATE_H1, HTML_TITLE, HTML_HEADING, sb.toString());
 	}
 
 }

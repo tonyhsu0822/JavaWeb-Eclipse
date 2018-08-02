@@ -31,7 +31,7 @@ public class Login2 extends HttpServlet {
 		String password = request.getParameter("password");
 		
 		if("caterpillar".equals(name) && "123456".equals(password)){
-			// not understand here, security issue?
+			//security issue: prevent session fixation attack
 			if(request.getSession(false) != null) {
 				request.changeSessionId();
 			}
