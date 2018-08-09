@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import example.shawn.model.UserService;
+
 /**
  * Servlet implementation class Register
  */
@@ -62,7 +64,8 @@ public class Register extends HttpServlet {
 		String path;
 		if(errorList.isEmpty()) {
 			path = FORWARD_SUCCESS;
-			tryCreateUser(email, username, password);
+			UserService userService = (UserService) getServletContext().getAttribute("userService");
+			userService.tryCreateUser(email, username, password);
 		}
 		else {
 			path = FORWARD_ERROR;
@@ -87,32 +90,6 @@ public class Register extends HttpServlet {
 				&& (!password.isEmpty()) && (!password2.isEmpty())
 				&& (REGEX_PASSWORD.matcher(password).matches())
 				&& (password.equals(password2));
-	}
-	
-	private void tryCreateUser(String email, String username, String password) throws IOException{
-//		Path userhome = Paths.get(PATH_USERS, username);
-		File userhome2 = new File(Constants.PATH_USERS, username);
-		if(!userhome2.exists() /* || Files.notExists(userhome)*/ ) {
-			
-			userhome2.mkdir();
-			
-			// encryption
-			int salt = (int)(Math.random() * 100);
-			String encrypt = String.valueOf(salt + password.hashCode());
-
-			File profile2 = new File(userhome2, "profile");
-			try(FileWriter fw = new FileWriter(profile2);
-					BufferedWriter bw = new BufferedWriter(fw);){
-				bw.write(String.format("%s\t%s\t%d", email, encrypt, salt));
-			}
-			
-			// java.nio
-//			Files.createDirectories(userhome);
-//			Path profile = userhome.resolve("profile");
-//			try(BufferedWriter writer = Files.newBufferedWriter(profile);){
-//				writer.write(String.format("%s\t%s\t%d", email, encrypt, salt));
-//			}
-		}
 	}
 }
 

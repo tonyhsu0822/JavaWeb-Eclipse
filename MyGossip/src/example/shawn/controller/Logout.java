@@ -28,10 +28,7 @@ public class Logout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// why check this condition?
-		if(request.getSession().getAttribute("logined") != null) {
-			request.getSession().invalidate();
-		}
+		request.getSession().invalidate();
 		response.sendRedirect(REDIRECT_INDEX);
 	}
 }

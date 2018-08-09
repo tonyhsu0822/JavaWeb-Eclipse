@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import example.shawn.model.UserService;
+
 /**
  * Servlet implementation class Login
  */
@@ -37,7 +39,8 @@ public class Login extends HttpServlet {
 		String password = request.getParameter("password");
 		String redirectTo;
 		
-		if(login(username, password)) {
+		UserService userService = (UserService) getServletContext().getAttribute("userService"); 
+		if(userService.login(username, password)) {
 			// security issue: prevent session fixation attack
 			if(request.getSession(false) != null) {
 				request.changeSessionId();
@@ -51,29 +54,7 @@ public class Login extends HttpServlet {
 		response.sendRedirect(redirectTo);
 	}
 
-	private boolean login(String username, String password) throws IOException {
-		if(username != null && !username.isEmpty()
-				&& password != null && !password.isEmpty()) {
-			
-			Path userhome = Paths.get(Constants.PATH_USERS, username);
-			return Files.exists(userhome) && isCorrectPassword(password, userhome); 
-		}
-		else {
-			return false;
-		}
-	}
 	
-	private boolean isCorrectPassword(String password, Path userhome) throws IOException {
-		Path profile = userhome.resolve("profile");
-		try(BufferedReader reader = Files.newBufferedReader(profile)){
-			String[] data = reader.readLine().split("\t");
-			// 0:email 1:password(encrypted) 2:salt
-			int encrypt = Integer.parseInt(data[1]);
-			int salt = Integer.parseInt(data[2]);
-			
-			return (password.hashCode() + salt) == encrypt;
-		}
-	}
 }
 
 

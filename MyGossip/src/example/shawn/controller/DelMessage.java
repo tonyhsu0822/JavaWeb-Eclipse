@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import example.shawn.model.UserService;
+
 /**
  * Servlet implementation class DelMessage
  */
@@ -29,26 +31,16 @@ public class DelMessage extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// prevent user manually typing URL to access this Servlet
-		// redirect those who didn't got "logined" token to index
-		// TODO make this become a Filter
-		if(request.getSession().getAttribute("logined") == null) {
-			response.sendRedirect(Constants.REDIRECT_INDEX);
-			return;
-		}
-		
 		String username = (String)request.getSession().getAttribute("logined");
 		String ms = request.getParameter("millis");
 		if(ms != null) {
-			deleteMessage(username, ms);
+			UserService userService = (UserService) getServletContext().getAttribute("userService"); 
+			userService.deleteMessage(username, ms);
 		}
 		
 		response.sendRedirect(Constants.REDIRECT_MEMBER);
 	}
 	
-	private void deleteMessage(String username, String ms) throws IOException {
-		Path txt = Paths.get(Constants.PATH_USERS, username, String.format("%s.txt", ms));
-		Files.delete(txt);
-	}
+	
 
 }

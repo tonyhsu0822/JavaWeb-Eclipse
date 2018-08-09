@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import example.shawn.model.UserService;
+
 /**
  * Servlet implementation class NewMessage
  */
@@ -29,14 +31,7 @@ public class NewMessage extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// prevent user manually typing URL to access this Servlet
-		// redirect those who didn't got "logined" token to index
-		if(request.getSession().getAttribute("logined") == null) {
-			response.sendRedirect(Constants.REDIRECT_INDEX);
-			return;
-		}
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		request.setCharacterEncoding("utf-8");
 //		response.setContentType("text/html;charset=utf-8");
 		String content = request.getParameter("content");
@@ -47,20 +42,14 @@ public class NewMessage extends HttpServlet {
 			request.getRequestDispatcher(Constants.REDIRECT_MEMBER).forward(request, response);
 			return;
 		} else { // add new message
+			UserService userService = (UserService) getServletContext().getAttribute("userService"); 
 			String username = (String)request.getSession().getAttribute("logined");
-			addMessage(username, content);
+			userService.addMessage(username, content);
 			response.sendRedirect(Constants.REDIRECT_MEMBER);
 		}
 	}
 	
-	private void addMessage(String username, String content) throws IOException {
-		String filename = String.format("%d.txt", System.currentTimeMillis());
-		Path txt = Paths.get(Constants.PATH_USERS, username, filename);
-		
-		try(BufferedWriter writer = Files.newBufferedWriter(txt);){
-			writer.write(content);
-		}
-	}
+	
 
 }
 
