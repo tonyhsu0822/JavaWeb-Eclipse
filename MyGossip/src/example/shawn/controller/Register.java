@@ -28,8 +28,8 @@ public class Register extends HttpServlet {
     private static final String MSG_INVALID_EMAIL = "電子信箱格式錯誤";
     private static final String MSG_INVALID_USERNAME = "使用者名稱不符合規定";
     private static final String MSG_INVALID_PASSWORD = "密碼不符合規定或兩次密碼不同";
-    private static final String FORWARD_SUCCESS = "RegisterSuccess.view";
-    private static final String FORWARD_ERROR = "RegisterError.view";
+    private static final String FORWARD_SUCCESS = "WEB-INF/jsp/register_success.jsp";
+    private static final String FORWARD_FORM = "WEB-INF/jsp/register.jsp";
     
     private static final Pattern REGEX_USERNAME = Pattern.compile("^\\w{1,16}$");
     private static final Pattern REGEX_PASSWORD = Pattern.compile("^\\w{8,16}$");
@@ -41,9 +41,13 @@ public class Register extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+    // GET request from the link of index
+    // just forward it to "register.jsp"
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	request.getRequestDispatcher(FORWARD_FORM).forward(request, response);
+    }
+    
+	// POST request from register.jsp
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String username = request.getParameter("username");
@@ -68,8 +72,8 @@ public class Register extends HttpServlet {
 			userService.tryCreateUser(email, username, password);
 		}
 		else {
-			path = FORWARD_ERROR;
-			request.setAttribute("errorlist", errorList);
+			path = FORWARD_FORM;
+			request.setAttribute("errorList", errorList);
 		}
 		request.getRequestDispatcher(path).forward(request, response);
 	}

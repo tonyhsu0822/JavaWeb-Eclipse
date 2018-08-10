@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,13 @@
 		<li>隨意寫寫表心情</li>
 	</ul>
 	<img src="images/血小板.jpg" alt="血小板.jpg" height="200" width="200"/>
+	
+	<ul style="color:red">
+		<c:forEach var="error" items="${errorList}">
+			<li>${error}</li>
+		</c:forEach>
+	</ul>
+	
 	<form method="post" action="Login">
 		<table style="background-color:lightgray">
 			<tr>
@@ -19,7 +27,7 @@
 			</tr>
 			<tr>
 				<td>名稱:</td>
-				<td><input type="text" name="username"></td>
+				<td><input type="text" name="username" value="${param.username}"></td>
 			</tr>
 			<tr>
 				<td>密碼:</td>
@@ -30,7 +38,7 @@
 			</tr>
 			<tr>
 				<td><a href="forgot.html">忘記密碼?</a></td>
-				<td align="right"><a href="register.html">會員註冊</a></td>
+				<td align="right"><a href="Register">會員註冊</a></td>
 			</tr>
 		</table>
 	</form>

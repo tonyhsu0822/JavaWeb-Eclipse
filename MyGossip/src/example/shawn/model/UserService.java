@@ -10,9 +10,9 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.List;
 
 import example.shawn.controller.Constants;
 
@@ -73,37 +73,37 @@ public class UserService {
 		}
 	}
 	
-	// get user's message from files(.txt)
-		// Map key: milliseconds since 1970/1/1, value: the message content
-		public Map<Long, String> getMessages(String username) throws IOException{
-			Path userhome = Paths.get(Constants.PATH_USERS, username);
-			// to order the latest post at the first, using reverse order
-			Map<Long, String> messages = new TreeMap<>(Comparator.reverseOrder());
-			
-			try(DirectoryStream<Path> textfiles = Files.newDirectoryStream(userhome, "*.txt")){
-				for(Path txt : textfiles) {
-					// translate filename to milliseconds
-					Long ms = Long.parseLong(
-							txt.getFileName().toString().replace(".txt", ""));
-					// get file content by buffered reader
-					StringBuilder content = new StringBuilder();
-					try(BufferedReader reader = new BufferedReader(new FileReader(txt.toString()))){
-						for(String s; (s = reader.readLine()) != null;) {
-							content.append(s);
-						}
+	public List<Message> getMessages(String username) throws IOException{
+		Path userhome = Paths.get(Constants.PATH_USERS, username);
+		// to order the latest post at the first, using reverse order
+		List<Message> messages = new ArrayList<>();
+		
+		try(DirectoryStream<Path> textfiles = Files.newDirectoryStream(userhome, "*.txt")){
+			for(Path txt : textfiles) {
+				// translate filename to milliseconds
+				Long ms = Long.parseLong(
+						txt.getFileName().toString().replace(".txt", ""));
+				// get file content by buffered reader
+				StringBuilder content = new StringBuilder();
+				try(BufferedReader reader = new BufferedReader(new FileReader(txt.toString()))){
+					for(String s; (s = reader.readLine()) != null;) {
+						content.append(s);
 					}
-					
-					// get file content by Files.readAllLines
-//					for(String s : Files.readAllLines(txt)) {
-//						content.append(s);
-//					}
-					
-					messages.put(ms, content.toString());
 				}
+				
+				// get file content by Files.readAllLines
+//				for(String s : Files.readAllLines(txt)) {
+//					content.append(s);
+//				}
+				
+				messages.add(new Message(username, ms, content.toString()));
 			}
-			
-			return messages;
 		}
+			
+		messages.sort(Comparator.comparing(Message::getMillis).reversed());
+		
+		return messages;
+	}
 	
 	public void addMessage(String username, String content) throws IOException {
 		String filename = String.format("%d.txt", System.currentTimeMillis());

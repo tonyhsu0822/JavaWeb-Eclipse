@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +23,7 @@ public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	private static final String REDIRECT_SUCCESS = "Member";
-	private static final String REDIRECT_ERROR = "index.html";
+	private static final String REDIRECT_ERROR = "/WEB-INF/jsp/index.jsp";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -37,7 +38,6 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		String redirectTo;
 		
 		UserService userService = (UserService) getServletContext().getAttribute("userService"); 
 		if(userService.login(username, password)) {
@@ -46,12 +46,13 @@ public class Login extends HttpServlet {
 				request.changeSessionId();
 			}
 			request.getSession().setAttribute("logined", username);
-			redirectTo = REDIRECT_SUCCESS;
+			response.sendRedirect(REDIRECT_SUCCESS);
 		} else {
-			redirectTo = REDIRECT_ERROR;
+			request.setAttribute("errorList", Arrays.asList("登入失敗"));
+			request.getRequestDispatcher(REDIRECT_ERROR).forward(request, response);
 		}
 		
-		response.sendRedirect(redirectTo);
+		
 	}
 
 	

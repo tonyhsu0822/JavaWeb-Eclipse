@@ -26,7 +26,7 @@ import example.shawn.model.UserService;
 public class Member extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	private static final String FORWARD_MEMBER_VIEW = "Member.view";
+	private static final String FORWARD_MEMBER_VIEW = "WEB-INF/jsp/member.jsp";
     /**
      * @see HttpServlet#HttpServlet()
      */

@@ -8,18 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Logout
+ * Servlet implementation class Index
  */
-@WebServlet("/Logout")
-public class Logout extends HttpServlet {
+@WebServlet("")
+public class Index extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private static final String REDIRECT_INDEX = "/MyGossip";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Logout() {
+    public Index() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +26,7 @@ public class Logout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().invalidate();
-		response.sendRedirect(REDIRECT_INDEX);
+		request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request, response);
 	}
+
 }
