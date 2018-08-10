@@ -1,6 +1,7 @@
 package example.shawn.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -28,18 +29,20 @@ public class User extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// get the requested username from URL
 		String username = request.getPathInfo().substring(1);
 		UserService userService = (UserService) getServletContext().getAttribute("userService");
-		List<Message> messages = userService.getMessages(username);
 		
 		request.setAttribute("username", username);
-		request.setAttribute("messages", messages);
-		
+		if(userService.exist(username)) {
+			List<Message> messages = userService.getMessages(username);
+			request.setAttribute("messages", messages);
+		} else {
+			request.setAttribute("errorList",
+					Arrays.asList( String.format("%s 還沒發表訊息", username) ));
+		}
+
 		request.getRequestDispatcher(FORWARD_USER).forward(request, response);
 	}
 

@@ -10,7 +10,8 @@
 <body>
 	<div class='leftPanel'>
 		<img src='../images/血小板.jpg' alt='血小板' height="200" width="200"/><br><br>
-		${requestScope.username} 的網誌
+		${requestScope.username} 的網誌<br>
+		<a href="/MyGossip">回首頁</a>
 	</div>
 	
 	<table border="0">
@@ -19,20 +20,28 @@
 	    </thead>
 	    <tbody>
 	    
-	    <c:forEach var="message" items="${requestScope.messages}">
+    <c:choose>
+    	<c:when test="${requestScope.errorList != null}">
+    		<ul>
+	   		<c:forEach var="error" items="${requestScope.errorList }">
+	   			<li>${error}</li>
+	   		</c:forEach>
+	   		</ul>
+    	</c:when>
+	   	<c:otherwise>
+	    	<c:forEach var="message" items="${requestScope.messages}">
 	    	<tr>
 	    		<td style='vertical-align: top;'>
 	    			${message.username}<br>
 	    			${message.content}<br>
 	    			${message.localDateTime}
-	    			<form method="post" action="DelMessage">
-	    				<input type="hidden" name="millis" value="${message.millis}">
-	    				<button type="submit">刪除</button>
-	    			</form>
+	    			<hr>
 	    		</td>
 	    	</tr>
-	    </c:forEach>
-	    
+	    	</c:forEach>
+	    </c:otherwise>
+	</c:choose>
+		
 	    </tbody>
 	</table>
 </body>
