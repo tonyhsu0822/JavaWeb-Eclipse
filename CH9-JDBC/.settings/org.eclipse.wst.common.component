@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="MyGossip">
+    <wb-module deploy-name="CH9-JDBC">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <dependent-module archiveName="owasp-java-html-sanitizer-20180219.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/javaweb/JARs/owasp-java-html-sanitizer-20180219.1.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="taglibs-standard-impl-1.2.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/javaweb/JARs/taglibs-standard-impl-1.2.5.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="taglibs-standard-spec-1.2.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/javaweb/JARs/taglibs-standard-spec-1.2.5.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="guava-26.0-jre.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/javaweb/JARs/guava-26.0-jre.jar">
+        <dependent-module archiveName="h2-1.4.197.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/javaweb/JARs/h2-1.4.197.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="java-output-path" value="/MyGossip/build/classes"/>
-        <property name="context-root" value="MyGossip"/>
+        <property name="context-root" value="CH9-JDBC"/>
+        <property name="java-output-path" value="/CH9-JDBC/build/classes"/>
     </wb-module>
 </project-modules>
