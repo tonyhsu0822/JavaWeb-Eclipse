@@ -1,11 +1,8 @@
 package example.shawn.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import example.shawn.model.Message;
 import example.shawn.model.UserService;
 
 /**
@@ -49,6 +47,8 @@ public class Login extends HttpServlet {
 			response.sendRedirect(REDIRECT_SUCCESS);
 		} else {
 			request.setAttribute("errorList", Arrays.asList("登入失敗"));
+			List<Message> latest = userService.latestMessages(10);
+			request.setAttribute("latest", latest);
 			request.getRequestDispatcher(REDIRECT_ERROR).forward(request, response);
 		}
 		

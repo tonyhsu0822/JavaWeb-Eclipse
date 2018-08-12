@@ -38,6 +38,7 @@
 	    				<input type="hidden" name="millis" value="${message.millis}">
 	    				<button type="submit">刪除</button>
 	    			</form>
+	    			<hr>
 	    		</td>
 	    	</tr>
 	    </c:forEach>

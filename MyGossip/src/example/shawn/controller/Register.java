@@ -85,14 +85,12 @@ public class Register extends HttpServlet {
 	
 	// TODO username already existed?
 	private boolean validateUsername(String username) {
-		return (username != null) && (username.isEmpty())
-				&& (REGEX_USERNAME.matcher(username).matches());
+		return (username != null) && (REGEX_USERNAME.matcher(username).find());
 	}
 	
 	private boolean validatePassword(String password, String password2) {
 		return (password != null) && (password2 != null)
-				&& (!password.isEmpty()) && (!password2.isEmpty())
-				&& (REGEX_PASSWORD.matcher(password).matches())
+				&& (REGEX_PASSWORD.matcher(password).find())
 				&& (password.equals(password2));
 	}
 }

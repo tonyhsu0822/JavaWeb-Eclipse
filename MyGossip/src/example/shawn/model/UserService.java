@@ -44,6 +44,10 @@ public class UserService {
 		return (password.hashCode() + salt) == encrypt;
 	}
 	
+	public boolean exist(String username) {
+		return accountDAO.accountBy(username).isPresent();
+	}
+	
 	public List<Message> getMessages(String username) throws IOException{
 		List<Message> messages = messageDAO.messagesBy(username);
 		messages.sort(Comparator.comparing(Message::getMillis).reversed());
@@ -58,8 +62,8 @@ public class UserService {
 	public void deleteMessage(String username, String millis) throws IOException {
 		messageDAO.deleteMessageBy(username, millis);
 	}
-	
-	public boolean exist(String username) {
-		return accountDAO.accountBy(username).isPresent();
+
+	public List<Message> latestMessages(int n) {
+		return messageDAO.latestMessages(n);
 	}
 }

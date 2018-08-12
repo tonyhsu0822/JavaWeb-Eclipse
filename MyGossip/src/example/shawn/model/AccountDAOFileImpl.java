@@ -24,7 +24,7 @@ public class AccountDAOFileImpl implements AccountDAO {
 			Files.createDirectories(userhome);
 			Path profile = userhome.resolve("profile");
 			try(BufferedWriter writer = Files.newBufferedWriter(profile);){
-				writer.write(String.format("%s\t%s\t%d", account.getEmail(), account.getPassword(), account.getSalt()));
+				writer.write(String.format("%s\t%s\t%s", account.getEmail(), account.getPassword(), account.getSalt()));
 			}
 		} catch (IOException e) {
 			throw new UncheckedIOException(e);

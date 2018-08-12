@@ -63,4 +63,11 @@ public class MessageDAOFileImpl implements MessageDAO {
 		}
 	}
 
+	@Override
+	public List<Message> latestMessages(int n) {
+		// not implemented yet
+		// using jdbc implement instead
+		return null;
+	}
+
 }
