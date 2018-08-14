@@ -6,8 +6,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class UserService {
+	@Autowired
 	private final AccountDAO accountDAO;
+	@Autowired
 	private final MessageDAO messageDAO;
 	
 	public UserService(AccountDAO accountDAO, MessageDAO messageDAO) {

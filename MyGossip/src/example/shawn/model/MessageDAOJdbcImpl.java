@@ -9,8 +9,13 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class MessageDAOJdbcImpl implements MessageDAO {
 
+	@Autowired
 	private DataSource dataSource;
 	
 	public MessageDAOJdbcImpl(DataSource dataSource) {
