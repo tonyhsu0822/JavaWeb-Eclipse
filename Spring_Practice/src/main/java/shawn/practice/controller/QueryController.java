@@ -1,13 +1,17 @@
 package shawn.practice.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import shawn.practice.model.QueryService;
 import shawn.practice.model.User;
 
@@ -39,5 +43,19 @@ public class QueryController {
 		model.addAttribute("sex", sex);
 		
 		return "query";
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ModelAndView exceptionHandler(Exception e) {
+		ModelAndView mav = new ModelAndView();
+		
+		mav.addObject("errorOccured", true);
+		mav.addObject("exception", e);
+		if(e instanceof SQLException || e instanceof DataAccessException) {
+			mav.addObject("errorReason", "資料庫連線異常");
+		}
+		mav.setViewName("query");
+		
+		return mav;
 	}
 }

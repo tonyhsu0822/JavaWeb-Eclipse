@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page isErrorPage="true" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -42,7 +43,7 @@
 	</form>
 	<br>
 	
-<c:if test="${requestScope.showResult != null }">	
+<c:if test="${requestScope.showResult == true}">	
 	<table>
 		<tr>
 			<td>編號</td>
@@ -61,6 +62,12 @@
 		</tr>
 	</c:forEach>
 	</table>
+</c:if>
+
+<c:if test="${requestScope.errorOccured == true}">
+	<h3 style="color:red">An error occured</h3>
+	<h3 style="color:red">${requestScope.errorReason}</h3>
+	<%= exception.getClass().getName() %>
 </c:if>
 
 </body>
