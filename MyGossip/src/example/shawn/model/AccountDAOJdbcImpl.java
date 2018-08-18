@@ -20,15 +20,20 @@ public class AccountDAOJdbcImpl implements AccountDAO {
 	@Override
 	public void createAccount(Account account) {
 		final String sql = "INSERT INTO t_account (name, email, password, salt) VALUES (?, ?, ?, ?)";
+		final String sql2 = "INSERT INTO t_account_role (name, role) VALUES (?, 'member')";
 		try(Connection conn = dataSource.getConnection();
-				PreparedStatement stmt = conn.prepareStatement(sql)){
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				PreparedStatement stmt2 = conn.prepareStatement(sql2)){
 			
 			stmt.setString(1, account.getName());
 			stmt.setString(2, account.getEmail());
 			stmt.setString(3, account.getPassword());
 			stmt.setString(4, account.getSalt());
 			
+			stmt2.setString(1, account.getName());
+			
 			stmt.executeUpdate();
+			stmt2.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

@@ -21,4 +21,12 @@
   	<res-auth>Container</res-auth>
   	<res-sharing-scope>Shareable</res-sharing-scope>
   </resource-ref>
+  
+  <login-config>
+  	<auth-method>FORM</auth-method>
+  	<form-login-config>
+  		<form-login-page>/</form-login-page>
+  		<form-error-page>/</form-error-page>
+  	</form-login-config>
+  </login-config>
 </web-app>

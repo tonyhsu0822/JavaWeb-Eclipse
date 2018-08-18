@@ -1,11 +1,10 @@
 package example.shawn.controller;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +16,9 @@ import example.shawn.model.UserService;
  * Servlet implementation class DelMessage
  */
 @WebServlet("/DelMessage")
+@ServletSecurity(
+		@HttpConstraint(rolesAllowed = {"member"})
+)
 public class DelMessage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

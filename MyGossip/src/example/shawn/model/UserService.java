@@ -26,6 +26,16 @@ public class UserService {
 		}
 	}
 	
+	public Optional<String> encryptedPassword(String username, String password) {
+		Optional<Account> optionalAccount = accountDAO.accountBy(username);
+		if(optionalAccount.isPresent()) {
+			Account account = optionalAccount.get();
+			int salt = Integer.parseInt(account.getSalt());
+			return Optional.of(String.valueOf(salt + password.hashCode()));
+		}
+		return Optional.empty();
+	}
+	
 	public boolean login(String username, String password) throws IOException {
 		if(username != null && !username.isEmpty()
 				&& password != null && !password.isEmpty()) {

@@ -8,4 +8,10 @@
 		driverClassName="org.h2.Driver"
 		url="jdbc:h2:tcp://localhost/c:/javaweb/eclipse-workspace/MyGossip/gossip"
 		maxActive="100" maxIdle="30" maxWait="10000"/>
+		
+	<Realm className="org.apache.catalina.realm.DataSourceRealm"
+		localDataSource="true"
+		dataSourceName="jdbc/gossip"
+		userTable="t_account" userNameCol="name" userCredCol="password"
+		userRoleTable="t_account_role" roleNameCol="role"/>
 </Context>
