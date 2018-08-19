@@ -21,18 +21,18 @@
 		<table>
 			<tr>
 				<td width="150">使用者姓名:</td>
-				<td><input type="text" name="username" value="${requestScope.username }" size="15"></td>
+				<td><input type="text" name="username" value="${username }" size="15"></td>
 			</tr>
 			<tr>
 				<td>使用者電話:</td>
-				<td><input type="text" name="phone" value="${requestScope.phone }" size="15"></td>
+				<td><input type="text" name="phone" value="${phone }" size="15"></td>
 			</tr>
 			<tr>
 				<td>性別:</td>
 				<td>
 					<select name="sex">
-						<option value="M" ${requestScope.sex == 'M'? 'selected':''}>男</option>
-						<option value="F" ${requestScope.sex == 'F'? 'selected':''}>女</option>
+						<option value="M" ${sex == 'M'? 'selected':''}>男</option>
+						<option value="F" ${sex == 'F'? 'selected':''}>女</option>
 					</select>
 				</td>
 			</tr>
@@ -56,7 +56,7 @@
 		<tr>
 			<td>${user.id }</td>
 			<td>${user.username }</td>
-			<td>${user.sex }</td>
+			<td>${user.sex == 'M'? '男':'女'}</td>
 			<td>${user.phone }</td>
 			<td>${user.address }</td>
 		</tr>
@@ -64,9 +64,9 @@
 	</table>
 </c:if>
 
-<c:if test="${requestScope.errorOccured == true}">
-	<h3 style="color:red">An error occured</h3>
-	<h3 style="color:red">${requestScope.errorReason}</h3>
+<c:if test="${errorOccurred == true}">
+	<h3 style="color:red">An error occurred</h3>
+	<h3 style="color:red">${errorReason}</h3>
 	<%= exception.getClass().getName() %>
 </c:if>
 

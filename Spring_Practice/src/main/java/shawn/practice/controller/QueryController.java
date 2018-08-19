@@ -21,7 +21,7 @@ public class QueryController {
 	@Autowired
 	QueryService queryService;
 	
-	@RequestMapping(value = "query", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String queryForm() {
 		return "query";
 	}
@@ -49,7 +49,7 @@ public class QueryController {
 	public ModelAndView exceptionHandler(Exception e) {
 		ModelAndView mav = new ModelAndView();
 		
-		mav.addObject("errorOccured", true);
+		mav.addObject("errorOccurred", true);
 		mav.addObject("exception", e);
 		if(e instanceof SQLException || e instanceof DataAccessException) {
 			mav.addObject("errorReason", "資料庫連線異常");
