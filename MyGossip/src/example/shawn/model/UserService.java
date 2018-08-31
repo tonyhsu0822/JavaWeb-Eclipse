@@ -1,6 +1,5 @@
 package example.shawn.model;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
@@ -21,7 +20,7 @@ public class UserService {
 		this.messageDAO = messageDAO;
 	}
 	
-	public void tryCreateUser(String email, String username, String password) throws IOException{
+	public void tryCreateUser(String email, String username, String password) {
 		if(!accountDAO.accountBy(username).isPresent()) {			
 			// encryption
 			int salt = (int)(Math.random() * 100);
@@ -32,7 +31,7 @@ public class UserService {
 		}
 	}
 	
-	public boolean login(String username, String password) throws IOException {
+	public boolean login(String username, String password) {
 		if(username != null && !username.isEmpty()
 				&& password != null && !password.isEmpty()) {
 			Optional<Account> optionalAccount = accountDAO.accountBy(username);
@@ -43,7 +42,7 @@ public class UserService {
 		return false;
 	}
 	
-	private boolean isCorrectPassword(String password, Account account) throws IOException {
+	private boolean isCorrectPassword(String password, Account account) {
 		int encrypt = Integer.parseInt(account.getPassword());
 		int salt = Integer.parseInt(account.getSalt());
 		
@@ -54,18 +53,18 @@ public class UserService {
 		return accountDAO.accountBy(username).isPresent();
 	}
 	
-	public List<Message> getMessages(String username) throws IOException{
+	public List<Message> getMessages(String username) {
 		List<Message> messages = messageDAO.messagesBy(username);
 		messages.sort(Comparator.comparing(Message::getMillis).reversed());
 		return messages;
 	}
 	
-	public void addMessage(String username, String content) throws IOException {
+	public void addMessage(String username, String content) {
 		messageDAO.createMessage(
 				new Message(username, Instant.now().toEpochMilli(), content));
 	}
 	
-	public void deleteMessage(String username, String millis) throws IOException {
+	public void deleteMessage(String username, String millis) {
 		messageDAO.deleteMessageBy(username, millis);
 	}
 

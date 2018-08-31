@@ -1,12 +1,5 @@
 package example.shawn.controller;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import example.shawn.model.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -15,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+
+import example.shawn.model.UserService;
 
 @Controller
 public class MemberController {
@@ -29,7 +24,7 @@ public class MemberController {
 	@RequestMapping("Member")
 	public String member(
 			@SessionAttribute("logined") String username,
-			Model model) throws ServletException, IOException {	
+			Model model) {	
 //		String username = (String)request.getSession().getAttribute("logined");
 //		UserService userService = (UserService) request.getServletContext().getAttribute("userService"); 
 		
@@ -40,9 +35,9 @@ public class MemberController {
 	
 	@RequestMapping(value = "NewMessage", method = RequestMethod.POST)
 	protected String newMessage(
-			@RequestParam("content") String content,
+			@RequestParam(required=true) String content,
 			@SessionAttribute("logined") String username,
-			Model model) throws ServletException, IOException {	
+			Model model) {	
 //		request.setCharacterEncoding("utf-8");
 //		String content = request.getParameter("content");
 		if(content == null || content.isEmpty()) { // empty content, do nothing and return
@@ -61,7 +56,7 @@ public class MemberController {
 	@RequestMapping(value = "DelMessage", method = RequestMethod.POST)
 	protected String delMessage(
 			@SessionAttribute("logined") String username,
-			@RequestParam("millis") String ms) throws ServletException, IOException {
+			@RequestParam(name="millis", required=true) String ms) {
 //		String username = (String)request.getSession().getAttribute("logined");
 //		String ms = request.getParameter("millis");
 		if(ms != null) {
